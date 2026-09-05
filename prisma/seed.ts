@@ -1,13 +1,8 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
-import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/prisma/client/client.js";
 
-const adaptador = new PrismaPg({
-  connectionString: process.env.DATABASE_URL
-});
-
-const prisma = new PrismaClient({ adapter: adaptador });
+const prisma = new PrismaClient();
 
 async function sembrar() {
   const contrasena = await bcrypt.hash("Naye123!", 10);
@@ -15,7 +10,7 @@ async function sembrar() {
   // Utiliza upsert para garantizar la siembra idempotente y evitar duplicidad en ejecuciones repetidas
   const usuario = await prisma.usuario.upsert({
     where: { correo: "admin@naye.test" },
-    update: {},
+    update: { contrasena },
     create: {
       nombre: "Administradora",
       apellido: "Naye",
