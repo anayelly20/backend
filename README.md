@@ -53,6 +53,29 @@ La API queda disponible en `http://localhost:3000`.
 
 El seed crea el usuario de prueba `admin@naye.test` con contrasena `Naye123!`. Cambialo antes de usar el sistema fuera de desarrollo.
 
+## Despliegue en Railway
+
+1. Crea un proyecto en Railway y agrega un servicio **PostgreSQL**.
+2. Agrega este repositorio como servicio de aplicacion.
+3. En las variables del servicio de aplicacion configura:
+
+```env
+DATABASE_URL=${{Postgres.DATABASE_URL}}
+JWT_SECRETO=genera_un_secreto_largo_y_unico
+```
+
+Reemplaza `Postgres` por el nombre exacto del servicio PostgreSQL si es diferente. Railway proporciona `PORT` automaticamente; el servidor ya lo utiliza.
+
+El archivo `railway.json` configura el build, el arranque, las migraciones y el healthcheck. Al iniciar, Railway ejecuta `prisma migrate deploy` antes de levantar la API.
+
+Despues del primer despliegue, ejecuta una vez el seed desde un shell del servicio:
+
+```bash
+npm run db:seed
+```
+
+No subas `.env` al repositorio. Usa las variables de Railway para las credenciales de produccion.
+
 ## Comandos utiles
 
 ```bash

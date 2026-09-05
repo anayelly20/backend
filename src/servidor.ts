@@ -11,7 +11,7 @@ import { requiereAutenticacion } from "./middleware/auth.js";
 import { especificacionOpenApi } from "./documentacion/openapi.js";
 
 const aplicacion = express();
-const puerto = Number(process.env.PUERTO) || 3000;
+const puerto = Number(process.env.PORT ?? process.env.PUERTO) || 3000;
 
 // Configura middleware base, documentacion Swagger y rutas de la API con proteccion por token
 aplicacion.use(express.json());
