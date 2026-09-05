@@ -1,9 +1,7 @@
 import "dotenv/config";
-import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../prisma/client/client.js";
 
-const adaptador = new PrismaPg({ connectionString: process.env.DATABASE_URL });
-const prisma = new PrismaClient({ adapter: adaptador });
+const prisma = new PrismaClient();
 
 async function demostrar() {
   // Demuestra el caso N+1 ejecutando consultas individuales sucesivas por cada venta y detalle
